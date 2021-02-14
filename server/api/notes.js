@@ -6,7 +6,11 @@ const notes = db.get('notes');
 const router = express.Router();
 
 router.get('/', (req,res) => {
-   res.json([]);
+   notes.find({
+      user_id : req.user._id
+   }).then(notes => {
+      res.json(notes);
+   })
 });
 
 router.post('/', (req,res) => {
@@ -16,7 +20,7 @@ router.post('/', (req,res) => {
          ...req.body,
          user_id : req.user._id
       };
-      notes.insert(req.body).then(note => {
+      notes.insert(note).then(note => {
         res.json(note);
       });
    }else {
