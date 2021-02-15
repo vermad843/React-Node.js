@@ -13,12 +13,15 @@ router.get('/', (req,res) => {
    })
 });
 
+//  
+
 router.post('/', (req,res) => {
    const result = req.body;
    if(result) {
       const note = {
          ...req.body,
-         user_id : req.user._id
+         user_id : req.user._id,
+         date : new Date().toUTCString()   
       };
       notes.insert(note).then(note => {
         res.json(note);
@@ -29,6 +32,9 @@ router.post('/', (req,res) => {
       next(error);
    }
 });
+
+
+
 
 
 module.exports = router;
